@@ -4,7 +4,7 @@ Unit and regression test for the MDRestraintsGenerator package.
 
 # Import package, test suite, and other packages as needed
 import MDAnalysis as mda
-from MDAnalysisTests.datafiles import PSF, DCD, TPR, TRR, GRO
+from MDAnalysisTests.datafiles import PSF, DCD, TPR, TRR, GRO, XTC
 from MDAnalysis.analysis import rms, align
 from numpy.testing import assert_almost_equal
 import warnings
@@ -65,7 +65,7 @@ def test_rmsf_xtc(run):
 def test_rmsf_xtc(run):
     """Align multiple times + RMSF"""
 
-    u = mda.Universe(TPR, 'test.nc')
+    u = mda.Universe(TPR, XTC)
 
     u2 = u.copy()
 
