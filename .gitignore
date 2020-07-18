@@ -1,0 +1,10 @@
+# python
+__pycache__/
+.mypy_cache
+*.pyc
+.coverage
+*.swp
+*.npz
+# data
+
+__data__/

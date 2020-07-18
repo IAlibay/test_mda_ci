@@ -1,0 +1,64 @@
+language: python
+group: travist_latest
+
+env:
+  global:
+    - CYTHON_TRACE_NOGIL=1
+    - MPLBACKEND=agg
+      # scipy and matplotlib are in MDAnalysis
+    - CONDA_DEPENDENCIES="MDAnalysis MDAnalysisTests pytest pytest-cov codecov"
+    - CONDA_CHANNELS='conda-forge'
+    - CONDA_CHANNEL_PRIORITY=True
+
+
+# Run jobs on container-based infrastructure, can be overridden per job
+matrix:
+  include:
+    # Extra includes for OSX since python language is not available by default on OSX
+    #- os: osx
+    #  language: generic
+    #  env: PYTHON_VERSION=3.6
+    - os: osx
+      language: generic
+      env: PYTHON_VERSION=3.7
+
+
+    - os: linux
+      dist: bionic
+      language: generic  # No need to set Python version since its conda
+      env: PYTHON_VERSION=3.6
+      #    - os: linux
+      #dist: bionic
+      #language: generic
+      #env: PYTHON_VERSION=3.7
+      # - os: linux
+      #dist: bionic
+      #language: generic
+      #env: PYTHON_VERSION=3.8
+
+
+before_install:
+    # Additional info about the build
+  - uname -a
+  - df -h
+  - ulimit -a
+
+
+install:
+
+    # Create test environment for package (using astropy's ci-helper)
+  - git clone git://github.com/astropy/ci-helpers.git
+  - source ci-helpers/travis/setup_conda.sh
+  - python -V
+    # Build and install package
+  - python setup.py develop --no-deps
+
+
+script:
+  - pytest -v ./tests
+
+notifications:
+    email: false
+
+after_success:
+  - echo "done"
