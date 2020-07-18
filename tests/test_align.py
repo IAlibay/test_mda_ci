@@ -40,7 +40,7 @@ import pytest
 def test_rmsf_xtc(run):
     """Align multiple times + RMSF"""
 
-    u = mda.Universe(TPR, TRR)
+    u = mda.Universe(TPR, 'test.nc')
 
     average = align.AverageStructure(u, u, select='protein and name CA',
                                      ref_frame=0).run()
