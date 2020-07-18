@@ -51,7 +51,7 @@ install:
   - source ci-helpers/travis/setup_conda.sh
   - python -V
     # Build and install package
-  - python setup.py develop --no-deps
+    #- python setup.py develop --no-deps
 
 
 script:
