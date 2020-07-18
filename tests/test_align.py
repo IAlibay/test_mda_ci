@@ -4,7 +4,7 @@ Unit and regression test for the MDRestraintsGenerator package.
 
 # Import package, test suite, and other packages as needed
 import MDAnalysis as mda
-from MDAnalysisTests.datafiles import PSF, DCD, TPR, XTC
+from MDAnalysisTests.datafiles import PSF, DCD, TPR, TRR, GRO
 from MDAnalysis.analysis import rms, align
 from numpy.testing import assert_almost_equal
 import warnings
@@ -40,7 +40,7 @@ import pytest
 def test_rmsf_xtc(run):
     """Align multiple times + RMSF"""
 
-    u = mda.Universe(TPR, XTC)
+    u = mda.Universe(TPR, TRR)
 
     average = align.AverageStructure(u, u, select='protein and name CA',
                                      ref_frame=0).run()
