@@ -37,7 +37,7 @@ import pytest
 @pytest.mark.parametrize('run', [
     1, 2
 ])
-def test_rmsf_xtc(run):
+def test_rmsf_nc(run):
     """Align multiple times + RMSF"""
 
     u = mda.Universe(TPR, 'test.nc')
