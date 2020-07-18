@@ -11,27 +11,27 @@ import warnings
 import pytest
 
 
-@pytest.mark.parametrize('run', [
-    1, 2
-])
-def test_rmsf_psf(run):
-    """Align multiple times + RMSF"""
-
-    u = mda.Universe(PSF, DCD)
-
-    average = align.AverageStructure(u, u, select='protein and name CA',
-                                     ref_frame=0).run()
-
-    ref = average.universe
-
-    aligner = align.AlignTraj(u, ref,
-                              select='protein and name CA',
-                              in_memory=True).run()
-
-    c_alphas = u.select_atoms('protein and name CA')
-    R = rms.RMSF(c_alphas).run()
-
-    assert 1 == 1
+#@pytest.mark.parametrize('run', [
+#    1, 2
+#])
+#def test_rmsf_psf(run):
+#    """Align multiple times + RMSF"""
+#
+#    u = mda.Universe(PSF, DCD)
+#
+#    average = align.AverageStructure(u, u, select='protein and name CA',
+#                                     ref_frame=0).run()
+#
+#    ref = average.universe
+#
+#    aligner = align.AlignTraj(u, ref,
+#                              select='protein and name CA',
+#                              in_memory=True).run()
+#
+#    c_alphas = u.select_atoms('protein and name CA')
+#    R = rms.RMSF(c_alphas).run()
+#
+#    assert 1 == 1
 
 
 @pytest.mark.parametrize('run', [
