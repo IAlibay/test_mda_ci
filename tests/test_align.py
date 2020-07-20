@@ -34,29 +34,29 @@ import pytest
 #    assert 1 == 1
 
 
-@pytest.mark.parametrize('run', [
-    1, 2
-])
-def test_rmsf_nc(run):
-    """Align multiple times + RMSF"""
-
-    u = mda.Universe(TPR, 'test.nc')
-
-    u2 = u.copy()
-
-    average = align.AverageStructure(u2, u2, select='protein and name CA',
-                                     ref_frame=0).run()
-
-    ref = average.universe
-
-    aligner = align.AlignTraj(u2, ref,
-                              select='protein and name CA',
-                              in_memory=True).run()
-
-    c_alphas = u2.select_atoms('protein and name CA')
-    R = rms.RMSF(c_alphas).run()
-
-    assert 1 == 1
+#@pytest.mark.parametrize('run', [
+#    1, 2
+#])
+#def test_rmsf_nc(run):
+#    """Align multiple times + RMSF"""
+#
+#    u = mda.Universe(TPR, 'test.nc')
+#
+#    u2 = u.copy()
+#
+#    average = align.AverageStructure(u2, u2, select='protein and name CA',
+#                                     ref_frame=0).run()
+#
+#    ref = average.universe
+#
+#    aligner = align.AlignTraj(u2, ref,
+#                              select='protein and name CA',
+#                              in_memory=True).run()
+#
+#    c_alphas = u2.select_atoms('protein and name CA')
+#    R = rms.RMSF(c_alphas).run()
+#
+#    assert 1 == 1
 
 
 @pytest.mark.parametrize('run', [
