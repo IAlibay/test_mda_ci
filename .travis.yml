@@ -45,6 +45,7 @@ before_install:
   - uname -a
   - df -h
   - ulimit -a
+  - ulimit -c unlimited
 
 
 install:
@@ -64,6 +65,7 @@ script:
   - cd tests
   - pytest -v .
   - ls -a
+  - gdb --eval-command="py-bt" --batch python ./core
 
 notifications:
     email: false
