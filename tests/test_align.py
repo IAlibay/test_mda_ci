@@ -68,7 +68,8 @@ def test_rmsf_xtc():
 
     u = mda.Universe(TPR, XTC)
 
-    u2 = u.copy()
+    #u2 = u.copy()
+    u2 = u
 
     average = align.AverageStructure(u2, u2, select='protein and name CA',
                                      ref_frame=0).run()

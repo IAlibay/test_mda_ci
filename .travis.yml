@@ -63,6 +63,7 @@ install:
 script:
   - cd tests
   - pytest -v .
+  - ls -a
 
 notifications:
     email: false
