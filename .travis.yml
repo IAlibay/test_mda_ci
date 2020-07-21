@@ -46,7 +46,7 @@ before_install:
   - df -h
   - ulimit -a
   - ulimit -c unlimited
-  - sudo apt -y install gdb
+  - sudo apt-get -y install gdb
 
 
 install:
