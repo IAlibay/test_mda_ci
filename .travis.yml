@@ -5,9 +5,12 @@ env:
   global:
     - CYTHON_TRACE_NOGIL=1
     - MPLBACKEND=agg
-      # scipy and matplotlib are in MDAnalysis
-    - CONDA_DEPENDENCIES="numpy==1.18.5 MDAnalysis MDAnalysisTests pytest pytest-cov codecov"
-    - CONDA_CHANNELS='conda-forge'
+    - CONDA_MIN_DEPENDENCIES="mmtf-python biopython networkx cython matplotlib scipy griddataformats hypothesis gsd codecov"
+    - CONDA_DEPENDENCIES="${CONDA_MIN_DEPENDENCIES} seaborn>=0.7.0 clustalw=2.1 netcdf4 scikit-learn joblib>=0.12 chemfiles tqdm>=4.43.0 tidynamics>=1.0.0 rdkit>=2020.03.1"
+    - CONDA_CHANNELS='biobuilds conda-forge'
+    - CONDA_CHANNEL_PRIORITY=True
+    - PIP_DEPENDENCIES="duecredit parmed"
+    - NUMPY_VERSION=1.19.0
     - CONDA_CHANNEL_PRIORITY=True
 
 
@@ -27,14 +30,14 @@ matrix:
       dist: bionic
       language: generic  # No need to set Python version since its conda
       env: PYTHON_VERSION=3.6
-      #    - os: linux
-      #dist: bionic
-      #language: generic
-      #env: PYTHON_VERSION=3.7
-      # - os: linux
-      #dist: bionic
-      #language: generic
-      #env: PYTHON_VERSION=3.8
+    - os: linux
+      dist: bionic
+      language: generic
+      env: PYTHON_VERSION=3.7
+    - os: linux
+      dist: bionic
+      language: generic
+      env: PYTHON_VERSION=3.8
 
 
 before_install:
@@ -42,6 +45,8 @@ before_install:
   - uname -a
   - df -h
   - ulimit -a
+  - ulimit -c unlimited
+    #- sudo apt-get -y install gdb
 
 
 install:
@@ -50,6 +55,11 @@ install:
   - git clone git://github.com/astropy/ci-helpers.git
   - source ci-helpers/travis/setup_conda.sh
   - python -V
+  - git clone https://github.com/MDAnalysis/mdanalysis.git
+  - sed -i "s/x[idx] = np.dot(x[idx], R.T)/#x[idx] = np.dot(x[idx], R.T)/g" mdanalysis/package/MDAnalysis/core/groups.py
+  - conda install gdb -c conda-forge
+  - pip install mdanalysis/package
+  - pip install mdanalysis/testsuite
     # Build and install package
     #- python setup.py develop --no-deps
 
@@ -57,6 +67,8 @@ install:
 script:
   - cd tests
   - pytest -v .
+  - ls -a
+  - gdb --eval-command="py-bt" --batch /home/travis/miniconda/envs/test/bin/python ./core
 
 notifications:
     email: false
