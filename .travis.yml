@@ -46,7 +46,7 @@ before_install:
   - df -h
   - ulimit -a
   - ulimit -c unlimited
-  - sudo apt-get -y install gdb
+    #- sudo apt-get -y install gdb
 
 
 install:
@@ -56,6 +56,7 @@ install:
   - source ci-helpers/travis/setup_conda.sh
   - python -V
   - git clone https://github.com/MDAnalysis/mdanalysis.git
+  - conda install gdb -c conda-forge
   - pip install mdanalysis/package
   - pip install mdanalysis/testsuite
     # Build and install package
@@ -66,7 +67,7 @@ script:
   - cd tests
   - pytest -v .
   - ls -a
-  - gdb --eval-command="py-bt" --batch python ./core
+  - gdb --eval-command="py-bt" --batch /home/travis/miniconda/envs/test/bin/python ./core
 
 notifications:
     email: false
