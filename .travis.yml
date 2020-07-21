@@ -56,6 +56,7 @@ install:
   - source ci-helpers/travis/setup_conda.sh
   - python -V
   - git clone https://github.com/MDAnalysis/mdanalysis.git
+  - sed -i "s/x[idx] = np.dot(x[idx], R.T)/#x[idx] = np.dot(x[idx], R.T)/g" mdanalysis/package/MDAnalysis/core/groups.py
   - conda install gdb -c conda-forge
   - pip install mdanalysis/package
   - pip install mdanalysis/testsuite
